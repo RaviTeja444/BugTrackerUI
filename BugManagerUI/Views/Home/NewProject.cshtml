@@ -1,0 +1,206 @@
+﻿
+@{
+    ViewData["Title"] = "NewProject";
+}
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#create').click(function () {
+           
+            $('#projectcreatemodal').modal("show");
+        });
+
+        $('#create').click(function () {
+           
+            $('#projectcreatemodal1').modal("show");
+        });
+
+        $('#dashboard').click(function () {
+            window.location.href = "";
+        });
+    });
+
+    function createStory() {
+        var UserStory = new Object();
+        UserStory.UserStoryName = document.getElementById('projName');
+        UserStory.Points = document.getElementById('points');
+        UserStory.Priority = document.getElementById('priority');
+        UserStory.Description = document.getElementById('description');
+        UserStory.Comments = document.getElementById('comments');
+        $.ajax({
+            url: "/Home/CreateUserStory",
+            data: JSON.stringify(project),
+            contentType: "application/json",
+            type: "post",
+            success: function (data) {
+                window.location.href = "/Home/Dashboard";
+            }
+        })
+    }
+
+    function createDefect() {
+        var Defect = new Object();
+        Defect.DefectName = document.getElementById('projName1');
+        Defect.UserStoryNumber = document.getElementById('points1');
+        Defect.Priority = document.getElementById('priority1');
+        Defect.Description = document.getElementById('description1');
+        Defect.Comments = document.getElementById('comments1');
+        $.ajax({
+            url: "/Home/CreateDefect",
+            data: JSON.stringify(project),
+            contentType: "application/json",
+            type: "post",
+            success: function (data) {
+                window.location.href = "/Home/Dashboard";
+            }
+        })
+    }
+</script>
+
+<html>
+<body>
+    <div class="top-buffer"></div>
+    <div class="panel panel-primary">
+        <div class="panel panel-heading"></div>
+        <div class="panel-body">
+            <div class="btn-group">
+                <input class="btn btn-primary" id="createUS" value="Create User Story" />
+            </div>
+        </div>
+
+        <div class="panel-body">
+            <div class="btn-group">
+                <input class="btn btn-primary" id="createDefect" value="Create Defect" />
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="modal" id="projectcreatemodal" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    @*<div class="modal-header">
+                            <h4 class="alert-info">Create Project</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>*@
+                    <div class="modal-body">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading"><h4>Create User Story</h4> <button type="button" class="close" data-dismiss="modal">&times;</button></div>
+                            <div class="panel-body">
+                                <div class="form-row">
+                                    <label class="text-secondary col-md-3">USer Story Name</label>&nbsp;&nbsp;
+                                    <input type="text" class="text-success" id="projName" /><br /><br />
+                                </div>
+                                <div class="form-horizontal form-inline">
+                                    @*<div class="form-group">*@
+                                    <label class="text-secondary col-md-3">
+                                        Points
+                                    </label>&nbsp;&nbsp;
+                                    <select class="form-control small" id="points" style="width:35%;">
+                                        <option value="5">1-5</option>
+                                        <option value="10">5-10</option>
+                                        <option value="15">10-15</option>
+                                    </select><br /><br />
+                                    @*</div>*@
+                                </div>
+                                <div class="form-horizontal form-inline">
+                                    @*<div class="form-group">*@
+                                    <label class="text-secondary col-md-3">
+                                        Priority
+                                    </label>&nbsp;&nbsp;
+                                    <select class="form-control small" id="priority" style="width:35%;">
+                                        <option value="5">Low</option>
+                                        <option value="10">Medium</option>
+                                        <option value="15">High</option>
+                                    </select><br /><br />
+                                    @*</div>*@
+                                </div>
+                                <div class="form-row">
+                                    <label class="text-secondary col-md-3">Description</label>&nbsp;&nbsp;
+                                    <input type="text" class="text-success" id="description" /><br /><br />
+                                </div>
+
+                                <div class="form-row">
+                                    <label class="text-secondary col-md-3">Comments</label>&nbsp;&nbsp;
+                                    <input type="text" class="text-success text-area" id="comments" /><br /><br />
+                                </div>
+                                <div class="form-row">
+                                    <div class="btn-group" style="padding-left:250px;">
+                                        <a class="btn btn-primary" id="Create" onclick="createStory();">
+                                            <i class="glyphicon-log-in"></i> Create
+                                        </a>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="modal" id="projectcreatemodal1" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    @*<div class="modal-header">
+                            <h4 class="alert-info">Create Project</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>*@
+                    <div class="modal-body">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading"><h4>Create Defect</h4> <button type="button" class="close" data-dismiss="modal">&times;</button></div>
+                            <div class="panel-body">
+                                <div class="form-row">
+                                    <label class="text-secondary col-md-3">Defect Name</label>&nbsp;&nbsp;
+                                    <input type="text" class="text-success" id="projName1" /><br /><br />
+                                </div>
+                                <div class="form-row">
+                                    <label class="text-secondary col-md-3">User Story Number</label>&nbsp;&nbsp;
+                                    <input type="text" class="text-success" id="description1" /><br /><br />
+                                </div>
+
+                                <div class="form-horizontal form-inline">
+                                    @*<div class="form-group">*@
+                                    <label class="text-secondary col-md-3">
+                                        Priority
+                                    </label>&nbsp;&nbsp;
+                                    <select class="form-control small" id="priority1" style="width:35%;">
+                                        <option value="5">Low</option>
+                                        <option value="10">Medium</option>
+                                        <option value="15">High</option>
+                                    </select><br /><br />
+                                    @*</div>*@
+                                </div>
+                                <div class="form-row">
+                                    <label class="text-secondary col-md-3">Description</label>&nbsp;&nbsp;
+                                    <input type="text" class="text-success" id="description1" /><br /><br />
+                                </div>
+
+                                <div class="form-row">
+                                    <label class="text-secondary col-md-3">Comments</label>&nbsp;&nbsp;
+                                    <input type="text" class="text-success text-area" id="comments1" /><br /><br />
+                                </div>
+                                <div class="form-row">
+                                    <div class="btn-group" style="padding-left:250px;">
+                                        <a class="btn btn-primary" id="Create" onclick="createDefect();">
+                                            <i class="glyphicon-log-in"></i> Create
+                                        </a>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

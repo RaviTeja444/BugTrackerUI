@@ -1,0 +1,60 @@
+﻿@model BugManagerUI.Models.Register;
+@{
+    ViewData["Title"] = "Register";
+}
+
+<html>
+<head>
+
+</head>
+<body>
+    @using (Html.BeginForm("RegisterDetails", "Home", FormMethod.Post))
+    {
+    <div class="top-buffer" style="padding:70px;"></div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">Enter Details to Register</div>
+        <div class="form-horizontal">
+            <div class="panel-body">
+                <label class="control-label text-secondary col-md-2">First Name</label>
+                @Html.TextBoxFor(x => x.FirstName)
+            </div>
+            <div class="panel-body">
+                <label class="control-label text-secondary col-md-2">Last Name</label>
+                @Html.TextBoxFor(x => x.LastName)
+            </div>
+            <div class="panel-body">
+                <label class="control-label text-secondary col-md-2">Email</label>
+                @Html.TextBoxFor(x => x.Email)
+            </div>
+            <div class="panel-body">
+                <label class="control-label text-secondary col-md-2">Phone Number</label>
+                @Html.TextBoxFor(x => x.Contact)
+            </div>
+            <div class="panel-body">
+                <label class="control-label text-secondary col-md-2">Organization</label>
+                @Html.TextBoxFor(x => x.Organization)
+            </div>
+            <div class="panel-body">
+                <label class="control-label text-secondary col-md-2">Gender</label>
+                @Html.DropDownListFor(x => x.Gender, new SelectList(Enum.GetValues(typeof(Gender))), "Select")
+            </div>
+            <div class="panel-body">
+                <label class="control-label text-secondary col-md-2">Password</label>
+                @Html.PasswordFor(x=>x.Password)
+            </div>
+            <div class="panel-body">
+                <label class="control-label text-secondary col-md-2">Confirm Password</label>
+                @Html.PasswordFor(x=>x.ConfirmPassword)
+            </div>
+
+            <div class="panel-body">
+                <div class="btn-group" style="padding-left:200px;">
+                    <input class="btn btn-primary" type="submit" value="Register" />
+                </div>
+            </div>
+        </div>
+    </div> 
+    }
+</body>
+</html>
+

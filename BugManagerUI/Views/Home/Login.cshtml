@@ -1,0 +1,44 @@
+﻿@model BugManagerUI.Models.Login;
+@{
+    ViewData["Title"] = "Login";
+}
+
+<html>
+<body>
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/remarkable/1.7.1/remarkable.min.js"></script>
+    <script src="@Url.Content("~/Scripts/Tutorial.jsx")"></script>
+
+    <div id="content"></div>*@
+    @using (Html.BeginForm("CheckLogin", "Home", FormMethod.Post))
+    {
+        <div class="top-buffer" style="padding-top:150px"></div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">Enter Credentials</div>
+            <div class="form-horizontal">
+                <div class="panel-body">
+                    <label class="text-secondary control-label col-md-1">UserName</label>
+                    @Html.TextBoxFor(x => x.UserName)
+                </div>
+
+
+                <div class="panel-body">
+                    <label class="text-secondary control-label col-md-1">Password  </label>
+                    @Html.TextBoxFor(x => x.Password)
+                </div>
+
+
+                <div class="panel-body">
+                    <div class="btn-group" style="padding-left:100px;">
+
+                        <input type="submit" class="btn btn-primary" value="Submit" />
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</body>
+</html>
+

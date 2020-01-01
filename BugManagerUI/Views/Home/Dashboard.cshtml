@@ -1,0 +1,224 @@
+﻿@model List<BugManagerUI.Models.Dashboard>
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+    });
+    function openStory(num, name, descr) {
+        $('#projectstorymodal1 #projName1').val(name);
+        $('#projectstorymodal1 #description1').val(descr);
+        $('#projectstorymodal1 #storynumber').val(num);
+        $('#projectstorymodal1').modal("show");
+    }
+
+    function openDefect(num, name, descr) {
+        $('#projectdefectmodal1 #projName').val(name);
+        $('#projectdefectmodal1 #description').val(descr);
+        $('#projectdefectmodal1 #storynum').val(num);
+        $('#projectdefectmodal1').modal("show");
+    }
+
+    function SaveStory() {
+        var usname = document.getElementById('projName1');
+        var usnum = document.getElementById('storynumber');
+        var usstatus = document.getElementById('status1');
+        var descr = document.getElementById('description1');
+        
+        $.ajax({
+            url: "/Home/SaveUS?usname" + usname + "&usno=" + usnum + "&usstatus=" + usstatus+"&usdesc="+descr,
+            contentType: "application/json",
+            type: "post",
+            success: function (data) {
+                window.location.href = "/Home/Dashboard";
+            }
+        })
+    }
+    function SaveDefect() {
+        var defname = document.getElementById('projName');
+        var defno = document.getElementById('storynum');
+        var defstatus = document.getElementById('status');
+        var defdesc = document.getElementById('description');
+
+        $.ajax({
+            url: "/Home/SaveDefect?defname" + defname + "&defno=" + defno + "&defstatus=" + defstatus + "&defdesc=" + defdesc,
+            contentType: "application/json",
+            type: "post",
+            success: function (data) {
+                window.location.href = "/Home/Dashboard";
+            }
+        })
+    }
+    
+        //$('#usnum').click(function (num, name, desc) {
+        //    $('projectstorymodal1 #projName1').val(name);
+
+        //    //$.ajax( {
+        //    //    url: "/Home/CreateUserStory",
+        //    //    data: JSON.stringify(project),
+        //    //    contentType: "application/json",
+        //    //    type: "post",
+        //    //    success: function (data) {
+        //    //        window.location.href = "/Home/Dashboard";
+        //    //})
+        //})
+    })
+
+</script>
+<html>
+<body>
+    <div class="top-buffer"></div>
+    <div class="panel panel-primary">
+        <div class="panel-heading"></div>
+        <div class="panel-body">
+
+            @for (int i = 0; i <= Model.Count; i++)
+            {
+                <table class="table table-bordered">
+                    <thead class="navbar-header">
+                        <tr>
+                            <th>ProjectName</th>
+                            <th>User Story Number</th>
+                            <th>Defect Number</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                @Model[i].projectname
+                            </td>
+                            <td>
+                                <a href="javascript:void(0)" onclick="openStory(@Model[i].userstorynumber,@Model[i].userstoryname,@Model[i].userstorydescription)" id="usnum">@Model[i].userstorynumber</a>
+                            </td>
+                            <td>
+                                <a href="javascript:void(0)" onclick="openDefect(@Model[i].defectnumber,@Model[i].defectname,@Model[i].defectdescription)" id="defnum">@Model[i].defectnumber</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            }
+
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="modal" id="projectstorymodal1" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    @*<div class="modal-header">
+                            <h4 class="alert-info">Create Project</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>*@
+                    <div class="modal-body">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading"><h4>User Story</h4><button type="button" class="close" data-dismiss="modal">&times;</button></div>
+                            <div class="panel-body">
+                                <div class="form-row">
+                                    <label class="text-secondary col-md-3">User Story Name</label>&nbsp;&nbsp;
+                                    <input type="text" class="text-success" id="projName1" /><br /><br />
+                                </div>
+                                <div class="form-row">
+                                    <label class="text-secondary col-md-3">User Story Number</label>&nbsp;&nbsp;
+                                    <input type="text" class="text-success" id="storynumber" readonly /><br /><br />
+                                </div>
+
+                                <div class="form-horizontal form-inline">
+                                    @*<div class="form-group">*@
+                                    <label class="text-secondary col-md-3">
+                                        Status
+                                    </label>&nbsp;&nbsp;
+                                    <select class="form-control small" id="status1" style="width:35%;">
+                                        <option value="5">Open</option>
+                                        <option value="10">Working</option>
+                                        <option value="15">Completed</option>
+                                        <option value="15">Closed</option>
+                                        <option value="15">Deferred</option>
+                                    </select><br /><br />
+                                    @*</div>*@
+                                </div>
+                                <div class="form-row">
+                                    <label class="text-secondary col-md-3">Description</label>&nbsp;&nbsp;
+                                    <input type="text" class="text-success" id="description1" /><br /><br />
+                                </div>
+
+
+                                <div class="form-row">
+                                    <div class="btn-group" style="padding-left:250px;">
+                                        <a class="btn btn-primary" id="Create" onclick="SaveStory();">
+                                            <i class="glyphicon-log-in"></i> Save
+                                        </a>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="modal" id="projectdefectmodal1" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    @*<div class="modal-header">
+                            <h4 class="alert-info">Create Project</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>*@
+                    <div class="modal-body">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading"><h4>Defect</h4><button type="button" class="close" data-dismiss="modal">&times;</button></div>
+                            <div class="panel-body">
+                                <div class="form-row">
+                                    <label class="text-secondary col-md-3">Defect Name</label>&nbsp;&nbsp;
+                                    <input type="text" class="text-success" id="projName" /><br /><br />
+                                </div>
+                                <div class="form-row">
+                                    <label class="text-secondary col-md-3">Defect Number</label>&nbsp;&nbsp;
+                                    <input type="text" class="text-success" id="storynum" readonly/><br /><br />
+                                </div>
+
+                                <div class="form-horizontal form-inline">
+                                    @*<div class="form-group">*@
+                                    <label class="text-secondary col-md-3">
+                                        Status
+                                    </label>&nbsp;&nbsp;
+                                    <select class="form-control small" id="status" style="width:35%;">
+                                        <option value="5">Open</option>
+                                        <option value="10">Working</option>
+                                        <option value="15">Completed</option>
+                                        <option value="15">Closed</option>
+                                        <option value="15">Not A Defect</option>
+                                    </select><br /><br />
+                                    @*</div>*@
+                                </div>
+                                <div class="form-row">
+                                    <label class="text-secondary col-md-3">Description</label>&nbsp;&nbsp;
+                                    <input type="text" class="text-success" id="description" /><br /><br />
+                                </div>
+
+
+                                <div class="form-row">
+                                    <div class="btn-group" style="padding-left:250px;">
+                                        <a class="btn btn-primary" id="Create" onclick="SaveDefect();">
+                                            <i class="glyphicon-log-in"></i> Save
+                                        </a>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

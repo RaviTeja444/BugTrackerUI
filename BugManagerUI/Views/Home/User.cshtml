@@ -1,0 +1,111 @@
+﻿@model BugManagerUI.Utility.ApplicationUser;
+
+
+@{
+    ViewData["Title"] = "User";
+}
+
+<h2>Welcome @Model.UserName</h2>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#create').click(function () {
+                alert("came");
+                $('#projectcreatemodal').modal("show");
+            });
+
+            $('#dashboard').click(function () {
+                window.location.href = "";
+            });
+        });
+
+        function createProject() {
+            var project = new Object();
+            project.ProjectName = document.getElementById('projName');
+            project.ProjectSize = document.getElementById('sizedd');
+            project.Organization = document.getElementById('organization');
+            $.ajax({
+                url: "/Home/CreateUser",
+                data: JSON.stringify(project),
+                contentType:"application/json",
+                type: "post",
+                success: function (data) {
+                    window.location.href = "/Home/NewProject";
+                }
+            })
+        }
+
+    </script>
+
+</head>
+<body>
+
+    <div class="top-buffer" style="padding-top:70px;"></div>
+    <div class="panel panel-primary">
+        <div class="panel-heading"></div>
+        <div class="panel-body">
+            <div class="btn-group-lg">
+                <input type="submit" class="btn btn-primary" value="Create New Project" id="create" />
+            </div>
+        </div>
+
+        <div class="panel-body">
+            <div class="btn-group-lg">
+                <input type="submit" class="btn btn-primary" value="Go To Dashboard" id="dashboard" />
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="modal" id="projectcreatemodal" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    @*<div class="modal-header">
+                        <h4 class="alert-info">Create Project</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>*@
+                    <div class="modal-body">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading"><h4>Create Project</h4> <button type="button" class="close" data-dismiss="modal">&times;</button></div>
+                            <div class="panel-body">
+                                <div class="form-row">
+                                    <label class="text-secondary col-md-3">Project Name</label>&nbsp;&nbsp;
+                                    <input type="text" class="text-success" id="projName" /><br /><br />
+                                </div>
+                                <div class="form-horizontal form-inline">
+                                    @*<div class="form-group">*@
+                                    <label class="text-secondary col-md-3">
+                                        Project Size
+                                    </label>&nbsp;&nbsp;
+                                    <select class="form-control small" id="sizedd" style="width:35%;">
+                                        <option value="5">1-5</option>
+                                        <option value="10">5-10</option>
+                                        <option value="15">10-15</option>
+                                    </select><br /><br />
+                                    @*</div>*@
+                                </div>
+                                <div class="form-row">
+                                    <label class="text-secondary col-md-3">Organization Name</label>&nbsp;&nbsp;
+                                    <input type="text" class="text-success" id="organization" /><br /><br />
+                                </div>
+                                <div class="form-row">
+                                    <div class="btn-group" style="padding-left:250px;">
+                                        <a class="btn btn-primary" id="Create" onclick="createProject();">
+                                            <i class="glyphicon-log-in"></i> Create
+                                        </a>
+                                    </div>
+                                   
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
